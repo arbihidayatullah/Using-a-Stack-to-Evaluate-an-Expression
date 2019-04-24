@@ -1,3 +1,55 @@
+#include <iostream>
+#define MAX_STACK_SIZE 100
+
+struct Element {
+    int data;
+};
+
+class MyStack {
+    private:
+    Element stack[MAX_STACK_SIZE];
+
+    int top=-1;
+
+    public:
+    void init(){
+    	top=-1;
+	}
+    bool isEmpty(){
+        return (top<0); 
+    }
+    void push(int data){
+        Element item;
+        item.data=data;
+        stack[++top]=item;
+    }
+    Element pop(){
+        Element item;
+        item = stack[top--];
+        return item;
+    }
+    void printStackList(){
+        if (!isEmpty()){
+            for (int i=top;i>=0;i--)
+                std::cout<<stack[i].data<<std::endl;
+        } else {
+            std::cout<<"Stack Kosong"<<std::endl;
+        }
+    }
+    int Top(){
+        return top;
+    }
+};
+
+bool isOperand(char ch){
+	if((ch>='A' && ch<='Z') || (ch>='a' && ch<='z') || (ch>='9' && ch<='0')){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+
 string InfixtoPostfix(string input){
 	SC.init();
 	int i=0;
