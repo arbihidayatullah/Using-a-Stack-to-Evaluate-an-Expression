@@ -1,89 +1,101 @@
 #include <iostream>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#define MAX_STACK_SIZE 100
+
 using namespace std;
 
-struct Element {
-    int data;
+struct stack{
+	double StacK[100000];
+	char Stack[100000];
+	int top;
 };
 
-class MyStack {
-    private:
-    Element stack[MAX_STACK_SIZE];
+//========================================================================================== Convert
 
-    int top=-1;
+class Conv{
+private:
+	stack tumpuk;
 
-    public:
-    void init(){
-    	top=-1;
+public:
+	void init(){
+		tumpuk.top = -1;
 	}
-    bool isEmpty(){
-        return (top<0); 
-    }
-    void push(int data){
-        Element item;
-        item.data=data;
-        stack[++top]=item;
-    }
-    Element pop(){
-        Element item;
-        item = stack[top--];
-        return item;
-    }
-    void printStackList(){
-        if (!isEmpty()){
-            for (int i=top;i>=0;i--)
-                std::cout<<stack[i].data<<std::endl;
-        } else {
-            std::cout<<"Stack Kosong"<<std::endl;
-        }
-    }
-    int Top(){
-        return top;
-    }
-};
 
-bool isOperand(char ch){
-	if((ch>='A' && ch<='Z') || (ch>='a' && ch<='z') || (ch>='9' && ch<='0')){
-		return 1;
+	void push(char input){
+			tumpuk.top++;
+			tumpuk.Stack[tumpuk.top] = input;
 	}
-	else{
-		return 0;
+
+	void pop(){
+		tumpuk.top--;
 	}
+
+	char Top(){
+		return tumpuk.Stack[tumpuk.top];
+	}
+
+	bool isEmpty(){
+		if(tumpuk.top <= -1)
+			return true;
+		else
+			return false;
+	}
+}; Conv SC;
+
+//========================================================================================== Evaluate
+
+class Eval{
+private:
+	stack Tumpuk;
+
+public:
+	void push(double input){
+			Tumpuk.top++;
+			Tumpuk.StacK[Tumpuk.top] = input;
+	}
+
+	void pop(){
+		Tumpuk.top--;
+	}
+
+	double Top(){
+		return Tumpuk.StacK[Tumpuk.top];
+	}
+}; Eval SE;
+
+bool isOperand(char input){
+	int c = (int)input;
+	if(c >= 48 && c <= 57 || c >= 65 && c <= 90 || c >= 97 && c <= 122)
+		return true;
+	else
+		return false;
 }
 bool isOperator(char input){
- int c = (int)input;
- if(c == 94 || c >= 42 && c <= 43 || c == 45 || c == 47)//
-  return true;
- else
-  return false;
+	int c = (int)input;
+	if(c == 94 || c >= 42 && c <= 43 || c == 45 || c == 47)
+		return true;
+	else
+		return false;
 }
-
 int getlevel(char input){
- if(input == '^')
-  return 3;
- else if(input == '*' || input == '/')
-  return 2;
- else if(input == '+' || input == '-')
-  return 1;
- else if(input == '(' || input == ')')
-  return 0;
- else
-  return -1;
+	if(input == '^')
+		return 3;
+	else if(input == '*' || input == '/')
+		return 2;
+	else if(input == '+' || input == '-')
+		return 1;
+	else if(input == '(' || input == ')')
+		return 0;
+	else
+		return -1;
 }
-
 bool precedence(char input1, char input2){
- int c1 = getlevel(input1);
- int c2 = getlevel(input2);
+	int c1 = getlevel(input1);
+	int c2 = getlevel(input2);
 
- if(c1 <= c2)
-  return true;
- else
-  return false;
+	if(c1 <= c2)
+		return true;
+	else
+		return false;
 }
-
 string InfixtoPostfix(string input){
 	SC.init();
 	int i=0;
@@ -120,15 +132,11 @@ string InfixtoPostfix(string input){
 	}
 	return P;
 }
-
-//========================================================================================== Evaluate
-
 double pow(double number, double exp){
 	for(int i=1; i<exp; i++)
 		number *= number;
 	return number;
 }
-
 bool Operand(char input){
 	int c = (int)input;
 	if(c >= 48 && c <= 57)
@@ -141,7 +149,6 @@ bool Operand(char input){
 	else
 		return false;
 }
-
 double Operation(double op1, char c, double op2){
 	if(c == '^')
 		return (pow(op1,op2));
@@ -155,7 +162,6 @@ double Operation(double op1, char c, double op2){
 		return (op1 - op2);	
 	else return 0;
 }
-
 double Evaluate(string input){
 	int i = 0;
 	while(input[i] != '\0'){
@@ -177,23 +183,25 @@ double Evaluate(string input){
 	}
 	return SE.Top();
 }
+
+
 int main(){
+	string i;
+	cout<<"\t================================ "<<endl;
+	cout<<"nama anggota :  1.aulia ahmad nabil"<<endl;
+	cout<<"\t\t2.asbiq alawi"<<endl;
+ 	cout<<"\t\t3.arbi hidayatullah"<<endl;
+	cout<<"\t\t4.pandi barep arianza"<<endl;
+	cout<<"\t================================="<<endl<<endl;
+	cout<<"Enter Infix Expression = " << endl;
+	cout << (char)62 << (char)62 << " ";
+	getline(cin,i);
+	string P = InfixtoPostfix(i);
+	cout << "\nInfix    = " << i;
+	cout << "\nPostfix  = " << P;
+	double result = Evaluate(P);
+	cout << "\nEvaluate = " << result;
 
- string I;
- cout<<"\t================================ "<<endl;
- cout<<"nama anggota :  1.aulia ahmad nabil"<<endl;
- cout<<"\t\t2.asbiq alawi"<<endl;
- cout<<"\t\t3.arbi hidayatullah"<<endl;
- cout<<"\t\t4.pandi barep arianza"<<endl;
- cout<<"\t================================="<<endl<<endl;
- cout<<">> Enter Infix Expression = ";
- getline(cin,I);
- string P = InfixtoPostfix(I);
- cout<<">> Infix Your Enter = "<< I;
- cout<<"\n >> Postfix of Infix = "<< P;
- int result = Evaluate(P);
- cout<<"\n >> Evaluate Expression = "<< result;
-
- cin.get();
- return 0;
+	cin.get();
+	return 0;
 }
