@@ -1,5 +1,9 @@
 #include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #define MAX_STACK_SIZE 100
+using namespace std;
 
 struct Element {
     int data;
@@ -48,6 +52,13 @@ bool isOperand(char ch){
 	else{
 		return 0;
 	}
+}
+bool isOperator(char input){
+ int c = (int)input;
+ if(c == 94 || c >= 42 && c <= 43 || c == 45 || c == 47)//
+  return true;
+ else
+  return false;
 }
 
 int getlevel(char input){
@@ -165,4 +176,24 @@ double Evaluate(string input){
 		i++;
 	}
 	return SE.Top();
+}
+int main(){
+
+ string I;
+ cout<<"\t================================ "<<endl;
+ cout<<"nama anggota :  1.aulia ahmad nabil"<<endl;
+ cout<<"\t\t2.asbiq alawi"<<endl;
+ cout<<"\t\t3.arbi hidayatullah"<<endl;
+ cout<<"\t\t4.pandi barep arianza"<<endl;
+ cout<<"\t================================="<<endl<<endl;
+ cout<<">> Enter Infix Expression = ";
+ getline(cin,I);
+ string P = InfixtoPostfix(I);
+ cout<<">> Infix Your Enter = "<< I;
+ cout<<"\n >> Postfix of Infix = "<< P;
+ int result = Evaluate(P);
+ cout<<"\n >> Evaluate Expression = "<< result;
+
+ cin.get();
+ return 0;
 }
