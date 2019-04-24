@@ -50,6 +50,29 @@ bool isOperand(char ch){
 	}
 }
 
+int getlevel(char input){
+ if(input == '^')
+  return 3;
+ else if(input == '*' || input == '/')
+  return 2;
+ else if(input == '+' || input == '-')
+  return 1;
+ else if(input == '(' || input == ')')
+  return 0;
+ else
+  return -1;
+}
+
+bool precedence(char input1, char input2){
+ int c1 = getlevel(input1);
+ int c2 = getlevel(input2);
+
+ if(c1 <= c2)
+  return true;
+ else
+  return false;
+}
+
 string InfixtoPostfix(string input){
 	SC.init();
 	int i=0;
